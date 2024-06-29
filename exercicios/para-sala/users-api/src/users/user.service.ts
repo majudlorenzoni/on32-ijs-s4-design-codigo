@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-
+// Esse código é o contra exemplo que a prof apresentou hoje
 @Injectable()
 export class UserService {
   private users: User[] = [];
 
+  // Pensamos em deixar com menos parametros, mas ainda não sabemos como fazer isso
   createUser(
     name: string,
     email: string,
@@ -13,6 +14,8 @@ export class UserService {
     userType: 'customer' | 'manager' | 'admin',
     superPassword?: string,
   ): User {
+    // Separar as valiações em funções
+    // Usar o regex
     // valida user data
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       throw new Error('Invalid email');
@@ -46,6 +49,8 @@ export class UserService {
                   throw new Error('Invalid CPF');
                 } else {
                   // Elimina CPFs conhecidos que são inválidos
+                  //
+                  // Substituir por um FOR ou com uma API
                   if (
                     cpfWithoutDots === '00000000000' ||
                     cpfWithoutDots === '11111111111' ||
@@ -61,6 +66,8 @@ export class UserService {
                     throw new Error('Invalid CPF');
                   }
 
+                  // Adicionar a função do CPF
+                  // Variável com nome discutível
                   let sum = 0;
                   let remainder;
 
@@ -107,6 +114,8 @@ export class UserService {
       }
     }
 
+    // UserCode é usado para gerar um código único para o usuário
+    // Podemos trocar por uma função que gere um código único
     const userCode = `${Date.now().toString()}${this.users.length}`;
     const user = new User(
       name,
