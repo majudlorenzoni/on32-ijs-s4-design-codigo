@@ -1,6 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 
+//para validar o email 
+function validateEmail(email: string) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw new Error('Invalid email');
+  }
+}
+
+//para validar a senha e a supersenha 
+function validatePassword(password: string) {
+  if (
+    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+    password
+    )
+    ) {
+    throw new Error('Invalid password');
+    }
+}
+
+
 @Injectable()
 export class UserService {
   private users: User[] = [];
@@ -13,6 +32,14 @@ export class UserService {
     userType: 'customer' | 'manager' | 'admin',
     superPassword?: string,
   ): User {
+
+    validateEmail(email)
+    validatePassword(password)
+    if (superPassword) {
+      validatePassword(superPassword);
+      }
+
+
     // valida user data
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       throw new Error('Invalid email');
