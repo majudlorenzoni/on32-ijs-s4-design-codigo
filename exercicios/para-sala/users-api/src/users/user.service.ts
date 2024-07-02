@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-// Esse código é o contra exemplo que a prof apresentou hoje
+
 @Injectable()
 export class UserService {
   private users: User[] = [];
@@ -14,8 +14,6 @@ export class UserService {
     userType: 'customer' | 'manager' | 'admin',
     superPassword?: string,
   ): User {
-    // Separar as valiações em funções
-    // Usar o regex
     // valida user data
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       throw new Error('Invalid email');
